@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Portfolio Builder - Investment Simulator</title>
+    <title data-i18n="title">Crypto Portfolio Builder - Investment Simulator</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
     <style>
         * {
@@ -223,22 +223,57 @@
             color: white;
             font-size: 1.2em;
         }
+
+        .lang-switcher {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 999px;
+            padding: 4px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .lang-switcher button {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border: none;
+            border-radius: 999px;
+            background: transparent;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.2s, background 0.2s;
+        }
+        .lang-switcher button:hover { color: #333; }
+        .lang-switcher button.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
     </style>
 </head>
 <body>
+    <div class="lang-switcher" role="group" aria-label="Language">
+        <button type="button" class="lang-btn active" data-lang="en">EN</button>
+        <button type="button" class="lang-btn" data-lang="ru">RU</button>
+        <button type="button" class="lang-btn" data-lang="fr">FR</button>
+    </div>
+
     <div class="container">
         <div class="header">
-            <h1>💰 Crypto Portfolio Builder</h1>
-            <p>Interactive Investment Simulator - See Your Wealth Grow</p>
+            <h1 data-i18n="heading">💰 Crypto Portfolio Builder</h1>
+            <p data-i18n="subtitle">Interactive Investment Simulator - See Your Wealth Grow</p>
         </div>
 
         <div class="main-content">
             <!-- CONTROL PANEL -->
             <div class="control-panel">
-                <h2 style="margin-bottom: 25px; color: #333;">Parameters</h2>
+                <h2 style="margin-bottom: 25px; color: #333;" data-i18n="parameters">Parameters</h2>
 
                 <div class="control-group">
-                    <label>Initial Capital ($)</label>
+                    <label data-i18n="initialCapital">Initial Capital ($)</label>
                     <div class="slider-container">
                         <input type="range" id="initialCapital" min="1000" max="1000000" step="1000" value="10000">
                         <div class="slider-value" id="initialCapitalDisplay">$10,000</div>
@@ -246,7 +281,7 @@
                 </div>
 
                 <div class="control-group">
-                    <label>Monthly Investment ($)</label>
+                    <label data-i18n="monthlyInvestment">Monthly Investment ($)</label>
                     <div class="slider-container">
                         <input type="range" id="monthlyInvestment" min="0" max="50000" step="100" value="500">
                         <div class="slider-value" id="monthlyInvestmentDisplay">$500</div>
@@ -254,7 +289,7 @@
                 </div>
 
                 <div class="control-group">
-                    <label>Asset Allocation (%)</label>
+                    <label data-i18n="assetAllocation">Asset Allocation (%)</label>
                     <div class="slider-container">
                         <input type="range" id="assetAllocation" min="0" max="100" step="5" value="60">
                         <div class="slider-value" id="assetAllocationDisplay">60%</div>
@@ -262,47 +297,47 @@
                 </div>
 
                 <div class="control-group">
-                    <label>Strategy Type</label>
+                    <label data-i18n="strategyType">Strategy Type</label>
                     <select id="strategyType">
-                        <option value="low">🛡️ Low Risk</option>
-                        <option value="medium" selected>⚖️ Medium Risk</option>
-                        <option value="high">🚀 High Risk</option>
+                        <option value="low" data-i18n="optionLow">🛡️ Low Risk</option>
+                        <option value="medium" selected data-i18n="optionMedium">⚖️ Medium Risk</option>
+                        <option value="high" data-i18n="optionHigh">🚀 High Risk</option>
                     </select>
                 </div>
 
                 <div class="control-group">
-                    <label>Time Horizon (Years)</label>
+                    <label data-i18n="timeHorizon">Time Horizon (Years)</label>
                     <div class="slider-container">
                         <input type="range" id="timeHorizon" min="1" max="50" step="1" value="10">
                         <div class="slider-value" id="timeHorizonDisplay">10 years</div>
                     </div>
                 </div>
 
-                <button class="reset-btn" onclick="resetParameters()">↻ Reset</button>
+                <button class="reset-btn" id="btnReset" data-i18n="reset" onclick="resetParameters()">↻ Reset</button>
             </div>
 
             <!-- CHARTS -->
             <div>
                 <div class="charts-section">
                     <div class="chart-card">
-                        <div class="chart-title">Portfolio Growth</div>
+                        <div class="chart-title" data-i18n="chartPortfolioGrowth">Portfolio Growth</div>
                         <canvas id="portfolioChart"></canvas>
                     </div>
 
                     <div class="chart-card">
-                        <div class="chart-title">Portfolio Composition (Final Year)</div>
+                        <div class="chart-title" data-i18n="chartComposition">Portfolio Composition (Final Year)</div>
                         <canvas id="compositionChart"></canvas>
                     </div>
                 </div>
 
                 <div class="charts-section">
                     <div class="chart-card">
-                        <div class="chart-title">Year-over-Year Strategy Income</div>
+                        <div class="chart-title" data-i18n="chartIncome">Year-over-Year Strategy Income</div>
                         <canvas id="incomeChart"></canvas>
                     </div>
 
                     <div class="chart-card">
-                        <div class="chart-title">Monthly Passive Income</div>
+                        <div class="chart-title" data-i18n="chartMonthlyIncome">Monthly Passive Income</div>
                         <canvas id="monthlyIncomeChart"></canvas>
                     </div>
                 </div>
@@ -312,32 +347,163 @@
         <!-- METRICS -->
         <div class="metrics-section">
             <div class="metric-card">
-                <div class="metric-label">Total Portfolio Value</div>
+                <div class="metric-label" data-i18n="metricTotalValue">Total Portfolio Value</div>
                 <div class="metric-value" id="totalPortfolio">$0</div>
-                <div class="metric-sublabel">at end of period</div>
+                <div class="metric-sublabel" data-i18n="sublabelEndOfPeriod">at end of period</div>
             </div>
 
             <div class="metric-card">
-                <div class="metric-label">Monthly Passive Income</div>
+                <div class="metric-label" data-i18n="metricMonthlyIncome">Monthly Passive Income</div>
                 <div class="metric-value" id="monthlyIncome">$0</div>
-                <div class="metric-sublabel">from DeFi strategies</div>
+                <div class="metric-sublabel" data-i18n="sublabelDeFi">from DeFi strategies</div>
             </div>
 
             <div class="metric-card">
-                <div class="metric-label">Total Return</div>
+                <div class="metric-label" data-i18n="metricTotalReturn">Total Return</div>
                 <div class="metric-value" id="totalReturn">0%</div>
-                <div class="metric-sublabel">vs initial capital</div>
+                <div class="metric-sublabel" data-i18n="sublabelVsInitial">vs initial capital</div>
             </div>
 
             <div class="metric-card">
-                <div class="metric-label">Strategy Contribution</div>
+                <div class="metric-label" data-i18n="metricStrategyContribution">Strategy Contribution</div>
                 <div class="metric-value" id="strategyContribution">$0</div>
-                <div class="metric-sublabel">passive income generated</div>
+                <div class="metric-sublabel" data-i18n="sublabelPassiveGenerated">passive income generated</div>
             </div>
         </div>
     </div>
 
     <script>
+        // === i18n: EN / RU / FR ===
+        const translations = {
+            en: {
+                title: 'Crypto Portfolio Builder - Investment Simulator',
+                heading: '💰 Crypto Portfolio Builder',
+                subtitle: 'Interactive Investment Simulator - See Your Wealth Grow',
+                parameters: 'Parameters',
+                initialCapital: 'Initial Capital ($)',
+                monthlyInvestment: 'Monthly Investment ($)',
+                assetAllocation: 'Asset Allocation (%)',
+                strategyType: 'Strategy Type',
+                optionLow: '🛡️ Low Risk',
+                optionMedium: '⚖️ Medium Risk',
+                optionHigh: '🚀 High Risk',
+                timeHorizon: 'Time Horizon (Years)',
+                reset: '↻ Reset',
+                chartPortfolioGrowth: 'Portfolio Growth',
+                chartComposition: 'Portfolio Composition (Final Year)',
+                chartIncome: 'Year-over-Year Strategy Income',
+                chartMonthlyIncome: 'Monthly Passive Income',
+                metricTotalValue: 'Total Portfolio Value',
+                sublabelEndOfPeriod: 'at end of period',
+                metricMonthlyIncome: 'Monthly Passive Income',
+                sublabelDeFi: 'from DeFi strategies',
+                metricTotalReturn: 'Total Return',
+                sublabelVsInitial: 'vs initial capital',
+                metricStrategyContribution: 'Strategy Contribution',
+                sublabelPassiveGenerated: 'passive income generated',
+                labelTotalPortfolio: 'Total Portfolio',
+                labelCashBaseline: 'Cash Baseline',
+                labelAssets: 'Assets',
+                labelStables: 'Stables',
+                labelStrategyIncome: 'Strategy Income',
+                labelMonthlyPassiveIncome: 'Monthly Passive Income',
+                yearSingular: 'year',
+                yearPlural: 'years'
+            },
+            ru: {
+                title: 'Криптопортфель — Симулятор инвестиций',
+                heading: '💰 Криптопортфель',
+                subtitle: 'Интерактивный симулятор — смотрите, как растёт капитал',
+                parameters: 'Параметры',
+                initialCapital: 'Начальный капитал ($)',
+                monthlyInvestment: 'Ежемесячное пополнение ($)',
+                assetAllocation: 'Доля активов (%)',
+                strategyType: 'Тип стратегии',
+                optionLow: '🛡️ Низкий риск',
+                optionMedium: '⚖️ Средний риск',
+                optionHigh: '🚀 Высокий риск',
+                timeHorizon: 'Горизонт (лет)',
+                reset: '↻ Сброс',
+                chartPortfolioGrowth: 'Рост портфеля',
+                chartComposition: 'Состав портфеля (последний год)',
+                chartIncome: 'Доход по стратегии по годам',
+                chartMonthlyIncome: 'Ежемесячный пассивный доход',
+                metricTotalValue: 'Общая стоимость портфеля',
+                sublabelEndOfPeriod: 'на конец периода',
+                metricMonthlyIncome: 'Ежемесячный пассивный доход',
+                sublabelDeFi: 'от стратегий DeFi',
+                metricTotalReturn: 'Общая доходность',
+                sublabelVsInitial: 'к начальному капиталу',
+                metricStrategyContribution: 'Вклад стратегии',
+                sublabelPassiveGenerated: 'получено пассивного дохода',
+                labelTotalPortfolio: 'Весь портфель',
+                labelCashBaseline: 'Без инвестиций',
+                labelAssets: 'Активы',
+                labelStables: 'Стейблкоины',
+                labelStrategyIncome: 'Доход стратегии',
+                labelMonthlyPassiveIncome: 'Пассивный доход в месяц',
+                yearSingular: 'год',
+                yearPlural: 'лет'
+            },
+            fr: {
+                title: 'Simulateur de portefeuille crypto — Investissement',
+                heading: '💰 Simulateur de portefeuille crypto',
+                subtitle: 'Simulateur interactif — voyez votre capital croître',
+                parameters: 'Paramètres',
+                initialCapital: 'Capital initial ($)',
+                monthlyInvestment: 'Versement mensuel ($)',
+                assetAllocation: 'Répartition des actifs (%)',
+                strategyType: 'Type de stratégie',
+                optionLow: '🛡️ Risque faible',
+                optionMedium: '⚖️ Risque moyen',
+                optionHigh: '🚀 Risque élevé',
+                timeHorizon: 'Horizon (années)',
+                reset: '↻ Réinitialiser',
+                chartPortfolioGrowth: 'Croissance du portefeuille',
+                chartComposition: 'Composition du portefeuille (dernière année)',
+                chartIncome: 'Revenus de la stratégie par année',
+                chartMonthlyIncome: 'Revenus passifs mensuels',
+                metricTotalValue: 'Valeur totale du portefeuille',
+                sublabelEndOfPeriod: 'en fin de période',
+                metricMonthlyIncome: 'Revenus passifs mensuels',
+                sublabelDeFi: 'issus des stratégies DeFi',
+                metricTotalReturn: 'Rendement total',
+                sublabelVsInitial: 'par rapport au capital initial',
+                metricStrategyContribution: 'Apport de la stratégie',
+                sublabelPassiveGenerated: 'revenus passifs générés',
+                labelTotalPortfolio: 'Portefeuille total',
+                labelCashBaseline: 'Sans investissement',
+                labelAssets: 'Actifs',
+                labelStables: 'Stablecoins',
+                labelStrategyIncome: 'Revenus stratégie',
+                labelMonthlyPassiveIncome: 'Revenus passifs mensuels',
+                yearSingular: 'an',
+                yearPlural: 'ans'
+            }
+        };
+        let currentLang = localStorage.getItem('portfolio-lang') || 'en';
+        function t(key) { return (translations[currentLang] && translations[currentLang][key]) || translations.en[key] || key; }
+        function applyLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('portfolio-lang', lang);
+            document.documentElement.lang = lang === 'ru' ? 'ru' : (lang === 'fr' ? 'fr' : 'en');
+            document.querySelectorAll('[data-i18n]').forEach(function(el) {
+                var key = el.getAttribute('data-i18n');
+                if (key && translations[currentLang] && translations[currentLang][key] !== undefined) {
+                    if (el.tagName === 'TITLE') document.title = translations[currentLang][key];
+                    else el.textContent = translations[currentLang][key];
+                }
+            });
+            document.querySelectorAll('.lang-btn').forEach(function(btn) {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+            });
+            if (typeof updateDisplays === 'function') updateDisplays();
+            if (typeof updateDashboard === 'function') updateDashboard();
+        }
+        document.querySelectorAll('.lang-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() { applyLanguage(btn.getAttribute('data-lang')); });
+        });
+
         // Chart instances
         let portfolioChart = null;
         let compositionChart = null;
@@ -428,7 +594,8 @@
 
         // Format currency
         function formatCurrency(value) {
-            return new Intl.NumberFormat('en-US', {
+            var locale = currentLang === 'ru' ? 'ru-RU' : (currentLang === 'fr' ? 'fr-FR' : 'en-US');
+            return new Intl.NumberFormat(locale, {
                 style: 'currency',
                 currency: 'USD',
                 minimumFractionDigits: 0,
@@ -471,7 +638,7 @@
                     labels: data.years,
                     datasets: [
                         {
-                            label: 'Total Portfolio',
+                            label: t('labelTotalPortfolio'),
                             data: data.portfolioValues,
                             borderColor: '#667eea',
                             backgroundColor: 'rgba(102, 126, 234, 0.1)',
@@ -483,7 +650,7 @@
                             pointBackgroundColor: '#667eea'
                         },
                         {
-                            label: 'Cash Baseline',
+                            label: t('labelCashBaseline'),
                             data: data.cashBaseline,
                             borderColor: '#ccc',
                             borderWidth: 2,
@@ -525,7 +692,7 @@
             compositionChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Assets', 'Stables', 'Strategy Income'],
+                    labels: [t('labelAssets'), t('labelStables'), t('labelStrategyIncome')],
                     datasets: [{
                         data: [finalAsset, finalStable, finalIncome],
                         backgroundColor: ['#667eea', '#764ba2', '#f093fb'],
@@ -553,7 +720,7 @@
                 data: {
                     labels: data.years,
                     datasets: [{
-                        label: 'Strategy Income',
+                        label: t('labelStrategyIncome'),
                         data: data.strategyIncomes,
                         backgroundColor: 'rgba(102, 126, 234, 0.7)',
                         borderColor: '#667eea',
@@ -581,7 +748,7 @@
                 data: {
                     labels: data.years,
                     datasets: [{
-                        label: 'Monthly Passive Income',
+                        label: t('labelMonthlyPassiveIncome'),
                         data: data.monthlyIncomes,
                         borderColor: '#f093fb',
                         backgroundColor: 'rgba(240, 147, 251, 0.1)',
@@ -607,7 +774,7 @@
             document.getElementById('initialCapitalDisplay').textContent = formatCurrency(params.initialCapital);
             document.getElementById('monthlyInvestmentDisplay').textContent = formatCurrency(params.monthlyInvestment);
             document.getElementById('assetAllocationDisplay').textContent = params.assetAllocation + '%';
-            document.getElementById('timeHorizonDisplay').textContent = params.timeHorizon + ' year' + (params.timeHorizon > 1 ? 's' : '');
+            document.getElementById('timeHorizonDisplay').textContent = params.timeHorizon + ' ' + (params.timeHorizon > 1 ? t('yearPlural') : t('yearSingular'));
         }
 
         // Reset
@@ -629,6 +796,7 @@
         document.getElementById('timeHorizon').addEventListener('input', () => { updateDisplays(); updateDashboard(); });
 
         // Initial load
+        applyLanguage(currentLang);
         updateDisplays();
         updateDashboard();
     </script>
