@@ -22,6 +22,10 @@
     }
 
     .container { max-width: 1400px; margin: 0 auto; }
+    .container, .main-content, .charts-section, .metrics-section {
+      width: 100%;
+      max-width: 100%;
+    }
 
     .header { text-align: center; color: #fff; margin-bottom: 40px; }
     .header h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
@@ -32,6 +36,9 @@
       grid-template-columns: 350px 1fr;
       gap: 20px;
       margin-bottom: 30px;
+    }
+    .main-content > * {
+      min-width: 0;
     }
 
     .control-panel {
@@ -155,6 +162,9 @@
       gap: 20px;
       margin-bottom: 30px;
     }
+    .charts-section > * {
+      min-width: 0;
+    }
 
     .wide-chart { grid-column: 1 / -1; }
 
@@ -163,6 +173,13 @@
       border-radius: 15px;
       padding: 25px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+      width: 100% !important;
+      max-width: 100% !important;
     }
 
     .chart-title {
@@ -182,6 +199,9 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
+    }
+    .metrics-section > * {
+      min-width: 0;
     }
 
     .metric-card {
@@ -207,6 +227,7 @@
       padding: 25px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.3);
       margin-top: 24px;
+      overflow: hidden;
     }
     .guide-title { font-size: 1.1em; font-weight: 700; color: #333; margin-bottom: 10px; }
     .guide-summary { font-size: 0.95em; color: #4c4c4c; margin-bottom: 12px; line-height: 1.45; }
